@@ -3,8 +3,8 @@ from hyperspectral.hyperspectral_driver import *
 import matplotlib.pyplot as plt
 
 PORT = "COM7"  # CHANGE PER USER
-NFRAMES = 200
-ANGLE = 40
+NFRAMES = 50
+ANGLE = 10
 
 if "__main__" == __name__:
 
@@ -15,7 +15,7 @@ if "__main__" == __name__:
         cam.ExposureTimeAbs.Value = (
             cam.ExposureTimeAbs.Max
         )  # Set to max exposure time
-        cam.GainRaw.SetValue(500)  # Set gain to max value
+        # cam.GainRaw.SetValue(500)  # Set gain to max value
         fps = cam.ResultingFrameRateAbs.Value
 
         print("Setup Hyperspectral Camera")
@@ -33,7 +33,10 @@ if "__main__" == __name__:
 
         scene = grab_hyperspectral_scene(cam, NFRAMES)
         print("Plotting RGB Image...")
-        plt.imshow(scene[:, :, (504, 400, 260)], aspect="auto")
+        plt.imshow(
+            scene[:, :, (int(504 / 1), int(400 / 1), int(260 / 1))],
+            aspect="auto",
+        )
 
         # Grab single hyperspectral frame
         # grab = grab_hyperspectral_frame(cam)

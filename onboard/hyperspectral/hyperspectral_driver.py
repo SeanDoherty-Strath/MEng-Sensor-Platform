@@ -14,6 +14,10 @@ def setup_hyperspectral():
 
     cam.UserSetSelector = "Default"
     cam.UserSetLoad.Execute()
+
+    cam.BinningVertical = 1
+    cam.BinningHorizontal = 1
+
     return cam
 
 
@@ -32,7 +36,6 @@ def grab_hyperspectral_scene(cam, nframes):
         grab = cam.RetrieveResult(1000, pylon.TimeoutHandling_ThrowException)
 
         if grab.GrabSucceeded():
-            print(i)
             scene[:, i, :] = np.transpose(grab.Array)
             i += 1
 
