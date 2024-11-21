@@ -15,8 +15,8 @@ def setup_hyperspectral():
     cam.UserSetSelector = "Default"
     cam.UserSetLoad.Execute()
 
-    cam.BinningVertical = 1
-    cam.BinningHorizontal = 1
+    cam.BinningVertical = 2
+    cam.BinningHorizontal = 2
 
     return cam
 
@@ -54,6 +54,27 @@ def grab_hyperspectral_frame(cam):
     grab = cam.GrabOne(10000)
 
     return grab.Array
+
+def get_calibration_array(path):
+    """ Gets calibration file at {path} and returns as numpy array"""""
+    return np.loadtxt(path)
+
+def get_wavelength_index(cal_array, wavelength, pixel_binning):
+    """ Returns closest index of {wavelength} from {cal_array} while accounting for pixel binning """
+
+    if wavelength < cal_array[0]:
+        print("Wavelength out of range: Too small.")
+        return 0
+    elif wavelength > cal_array[-1]:
+        print("Wavelength out of range: Too large.")
+        return len(cal_array)
+
+    for i in range(0, len(cal_array)):
+        diff=wavelength-cal_array[i]
+        if diff <= 0:
+            break
+
+    return int(i/pixel_binning)
 
 
 def calibrate_hyperspectral(X, W, D):
