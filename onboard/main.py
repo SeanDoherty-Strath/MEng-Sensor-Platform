@@ -3,7 +3,7 @@ from hyperspectral.hyperspectral_driver import *
 import matplotlib.pyplot as plt
 import os
 
-CALIBRATION_FILE_PATH="hyperspectral/BaslerPIA1600_CalibrationA.txt"
+CALIBRATION_FILE_PATH = "hyperspectral/BaslerPIA1600_CalibrationA.txt"
 PORT = "COM5"  # CHANGE PER USER
 NFRAMES = 50
 ANGLE = 10
@@ -16,9 +16,7 @@ if "__main__" == __name__:
 
         # Setup hyperspectral
         cam = setup_hyperspectral()
-        cam.ExposureTimeAbs.Value = (
-            cam.ExposureTimeAbs.Max
-        )  # Set to max exposure time
+        cam.ExposureTimeAbs.Value = cam.ExposureTimeAbs.Max  # Set to max exposure time
         cam.GainRaw.SetValue(500)  # Set gain to max value
         fps = cam.ResultingFrameRateAbs.Value
 
