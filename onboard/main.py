@@ -1,21 +1,25 @@
 from hyperspectral.zaber_driver import *
 from hyperspectral.hyperspectral_driver import *
 import matplotlib.pyplot as plt
+import os
 
-PORT = "COM7"  # CHANGE PER USER
+CALIBRATION_FILE_PATH="hyperspectral/BaslerPIA1600_CalibrationA.txt"
+PORT = "COM5"  # CHANGE PER USER
 NFRAMES = 50
 ANGLE = 10
 
 if "__main__" == __name__:
-
     try:
+        # Get Calibration
+        calibration_array = get_calibration_array(CALIBRATION_FILE_PATH)
+        # print(get_wavelength_index(calibration_array,450,1))
 
         # Setup hyperspectral
         cam = setup_hyperspectral()
         cam.ExposureTimeAbs.Value = (
             cam.ExposureTimeAbs.Max
         )  # Set to max exposure time
-        # cam.GainRaw.SetValue(500)  # Set gain to max value
+        cam.GainRaw.SetValue(500)  # Set gain to max value
         fps = cam.ResultingFrameRateAbs.Value
 
         print("Setup Hyperspectral Camera")
@@ -34,7 +38,7 @@ if "__main__" == __name__:
         scene = grab_hyperspectral_scene(cam, NFRAMES)
         print("Plotting RGB Image...")
         plt.imshow(
-            scene[:, :, (int(504 / 1), int(400 / 1), int(260 / 1))],
+            scene[:, :, (int(504 / 2), int(400 / 2), int(260 / 2))],
             aspect="auto",
         )
 

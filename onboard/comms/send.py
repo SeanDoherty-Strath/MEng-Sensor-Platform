@@ -9,7 +9,7 @@ vid = cv2.VideoCapture(0)
 
 # Create a socket server
 send_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-send_socket.bind(("192.168.1.100", 9999))
+send_socket.bind(("192.168.1.59", 9999))
 send_socket.listen(10)  # max queue size 10
 
 # Accept basestation connection

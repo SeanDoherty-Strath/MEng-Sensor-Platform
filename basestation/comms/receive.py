@@ -6,7 +6,7 @@ import cv2
 
 # Create a socket
 receive_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-receive_socket.connect(("192.168.56.1", 9999))
+receive_socket.connect(("192.168.1.59", 9999))
 
 received_data = b""
 payload_size = struct.calcsize("L")
