@@ -1,6 +1,7 @@
 from hyperspectral.zaber_driver import *
 from hyperspectral.hyperspectral_driver import *
 import matplotlib.pyplot as plt
+from rgb.rgb import *
 import os
 
 CALIBRATION_FILE_PATH = "hyperspectral/BaslerPIA1600_CalibrationA.txt"
@@ -8,7 +9,7 @@ PORT = "COM5"  # CHANGE PER USER
 NFRAMES = 50
 ANGLE = 10
 
-if "__main__" == __name__:
+def hsi():
     try:
         # Get Calibration
         calibration_array = get_calibration_array(CALIBRATION_FILE_PATH)
@@ -58,3 +59,8 @@ if "__main__" == __name__:
         cam.Close()
         zaber_conn.close()
         print("ALL CONNECTIONS CLOSED")
+
+if "__main__" == __name__:
+    hsi()
+    # rgb_capture()
+

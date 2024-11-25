@@ -13,11 +13,11 @@ def bounding_box(img,box,labels):
 
     # confidence
     confidence = math.ceil((box.conf[0] * 100)) / 100
-    print("Confidence --->", confidence)
+    # print("Confidence --->", confidence)
 
     # class name
     cls = int(box.cls[0])
-    print("Class name -->", labels[cls])
+    # print("Class name -->", labels[cls])
 
     # object details
     org = [x1, y1]
@@ -26,15 +26,10 @@ def bounding_box(img,box,labels):
     color = (255, 0, 0)
     thickness = 2
 
-    cv2.putText(img, labels[cls], org, font, fontScale, color, thickness)
-
+    cv2.putText(img, f"{labels[cls]} -- {confidence}", org, font, fontScale, color, thickness)
     return img
 
-CAPTURE_METHOD = "IMAGE" # or "PICAM" or "IMAGE"
-FPS_AVERAGE_NUM_FRAMES = 20
-
-if __name__ == '__main__':
-
+def rgb_capture():
     model = YOLO("yolo_models/yolo11n.pt")
     count = 0
     start = time.time()
@@ -47,8 +42,7 @@ if __name__ == '__main__':
         for r in results:
             boxes = r.boxes
             for box in boxes:
-                img = bounding_box(img,box,model.names)
-
+                img = bounding_box(img, box, model.names)
 
         cv2.imshow("img", img)
         cv2.waitKey(0)
@@ -69,12 +63,12 @@ if __name__ == '__main__':
             # Calculate FPS
             if count % FPS_AVERAGE_NUM_FRAMES == 0:
                 end = time.time()
-                fps = FPS_AVERAGE_NUM_FRAMES /(end - start)
+                fps = FPS_AVERAGE_NUM_FRAMES / (end - start)
                 start = time.time()
 
             # Show the FPS
             fps_text = f"{fps:.2f} FPS"
-            cv2.putText(frame, fps_text, [50,50] , cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+            cv2.putText(frame, fps_text, [20, 20], cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
 
             count += 1
 
@@ -107,13 +101,12 @@ if __name__ == '__main__':
             # Calculate FPS
             if count % FPS_AVERAGE_NUM_FRAMES == 0:
                 end = time.time()
-                fps = FPS_AVERAGE_NUM_FRAMES /(end - start)
+                fps = FPS_AVERAGE_NUM_FRAMES / (end - start)
                 start = time.time()
 
             # Show the FPS
             fps_text = f"{fps:.2f} FPS"
-            cv2.putText(frame, fps_text, [50,50] , cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
-
+            cv2.putText(frame, fps_text, [20, 20], cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
 
             count += 1
 
@@ -122,3 +115,10 @@ if __name__ == '__main__':
                 break
 
         cv2.destroyAllWindows()
+
+
+CAPTURE_METHOD = "WEBCAM" # or "PICAM", "WEBCAM" or "IMAGE"
+FPS_AVERAGE_NUM_FRAMES = 20
+
+if __name__ == '__main__':
+    rgb_capture()
