@@ -1,0 +1,11 @@
+.panorama-container {
+    width: 100%; /* Full width of the screen */
+    height: 100%; /* Adjust to fit your desired height */
+    overflow-x: auto; /* Horizontal scrolling */
+    overflow-y: hidden; /* Hide vertical scrolling */
+}
+
+.panorama {
+    height: 100%;
+    display: inline-block;
+}
