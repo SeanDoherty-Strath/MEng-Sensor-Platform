@@ -3,7 +3,8 @@ import cv2
 import math
 import time
 
-def bounding_box(img,box,labels):
+
+def bounding_box(img, box, labels):
     # bounding box
     x1, y1, x2, y2 = box.xyxy[0]
     x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)  # convert to int values
@@ -26,8 +27,11 @@ def bounding_box(img,box,labels):
     color = (255, 0, 0)
     thickness = 2
 
-    cv2.putText(img, f"{labels[cls]} -- {confidence}", org, font, fontScale, color, thickness)
+    cv2.putText(
+        img, f"{labels[cls]} -- {confidence}", org, font, fontScale, color, thickness
+    )
     return img
+
 
 def rgb_capture():
     model = YOLO("yolo_models/yolo11n.pt")
@@ -68,12 +72,14 @@ def rgb_capture():
 
             # Show the FPS
             fps_text = f"{fps:.2f} FPS"
-            cv2.putText(frame, fps_text, [20, 20], cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+            cv2.putText(
+                frame, fps_text, [20, 20], cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1
+            )
 
             count += 1
 
-            cv2.imshow('frame', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            cv2.imshow("frame", frame)
+            if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
 
         cv2.destroyAllWindows()
@@ -106,19 +112,21 @@ def rgb_capture():
 
             # Show the FPS
             fps_text = f"{fps:.2f} FPS"
-            cv2.putText(frame, fps_text, [20, 20], cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+            cv2.putText(
+                frame, fps_text, [20, 20], cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1
+            )
 
             count += 1
 
-            cv2.imshow('frame', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            cv2.imshow("frame", frame)
+            if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
 
         cv2.destroyAllWindows()
 
 
-CAPTURE_METHOD = "WEBCAM" # or "PICAM", "WEBCAM" or "IMAGE"
+CAPTURE_METHOD = "WEBCAM"  # or "PICAM", "WEBCAM" or "IMAGE"
 FPS_AVERAGE_NUM_FRAMES = 20
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     rgb_capture()
