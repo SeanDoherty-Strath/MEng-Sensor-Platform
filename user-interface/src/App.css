@@ -40,3 +40,27 @@
   border-radius: 15px;
   overflow: hidden;
 }
+
+.search {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background-color: white;
+  border-radius: 15px;
+
+}
+
+.search button {
+  background-color: transparent;
+  border-color: transparent;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.search input {
+  background-color: transparent;
+  border-color: transparent;
+  font-size: 18px;
+
+}

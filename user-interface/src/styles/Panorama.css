@@ -3,9 +3,36 @@
     height: 100%; /* Adjust to fit your desired height */
     overflow-x: auto; /* Horizontal scrolling */
     overflow-y: hidden; /* Hide vertical scrolling */
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    display: flex;
 }
 
 .panorama {
     height: 100%;
     display: inline-block;
+}
+
+.bottomBar {
+    position: fixed;
+    background-color: white;
+    width: fit-content;
+    bottom: 10%;
+    align-self: center;
+    flex-direction: row;
+    display: flex;background: linear-gradient(to bottom, white, grey);
+    border-radius: 15px;
+}
+
+.bottomBar button {
+    background-color: transparent;
+    border-color: transparent;
+    margin: 5px;
+    
+}
+
+.bottomBar h1 {
+    font-size: 22px;
+    margin-left: 5px;
 }

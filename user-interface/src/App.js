@@ -5,9 +5,8 @@ import { Panorama } from './components/Panorama.js';
 
 function App() {
   
-  const [panorama, setPanorama] = useState(null);
-
-  // useEffect(()=> {
+  const [panorama, setPanorama] = useState(require('./components/images/img2.jpg'));
+  // const [panorama, setPanorama] = useState(null);
   //   fetch("/api/route")
   //   .then(res => res.json())
   //   .then(data => {setAccuracy(data.accuracy)})
@@ -27,11 +26,39 @@ function App() {
   //     .catch(err => console.error("Error fetching data:", err));
   // }, []);  // Add dependencies if needed
 
+  const [locationName, setLocationName] = useState('unnamed location')
+  const searchNewPins = async () => {
+
+      try {
+
+        const response = await fetch('SensorPlatformAnalysis.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setLocationName(data.location_name)
+      } catch (err) {
+        console.log(err)
+      }
+  }
+
+  useEffect(()=> {
+    searchNewPins();
+  }, [])
+
   return (
   
     <div className='container'>
+      {/* <button onClick={searchNewPins}>Press me biatch</button> */}
       <div className='header'>
-        <h1>HYPERBOT</h1>
+        <div className='search'>
+          <button>{'<'}</button>
+          <button>{'>'}</button>
+          <input placeholder='Search...'/> 
+          <button>{'↵'}</button>
+        </div>
+        <h1>Hyperbot</h1>
+        
       </div>
       <div className='body'>
         <div className='map-container'>
@@ -39,7 +66,7 @@ function App() {
         </div>
 
         <div className='panoramic-container'>
-          <Panorama panorama={panorama}/>
+          <Panorama panorama={panorama} locationName={locationName} setLocationName={setLocationName}/>
         </div>
 
       </div>
