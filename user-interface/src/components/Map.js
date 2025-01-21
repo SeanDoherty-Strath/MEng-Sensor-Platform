@@ -25,54 +25,9 @@ const AddPinOnClick = ({pins, setPins }) => {
 
 
 
-export function Map({setPanorama}) {
+export function Map({setPanorama, pins, setPins}) {
     
     const [mapCenter, setMapCenter] = useState([51.505, -0.09]) // default to London
-    const [pins, setPins] = useState([{ id: 1, coords: [55.86, -4.32], img: require("../assets/panoramas/panorama.png") }, { id: 2, coords: [55.86, -4.34], img: require("./images/img2.jpg")}, { id: 3, coords: [55.86, -4.36], img: require("./images/img3.jpg")}]);
-
-    // periodically search for new pins
-    // const searchNewPins = async () => {
-
-    //   try {
-
-    //     const response = await fetch('../assets/analysis/example.json');
-    //     console.log(response)
-    //     console.log(j)
-
-    //     if (!response.ok) {
-    //       throw new Error(`HTTP error! status: ${response.status}`);
-    //     }
-    //     const data = await response.json();
-    //     console.log("JSON Contents:", data);
-    //     // return data;
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // }
-
-    // useEffect(() => {
-    //   // Define the function to run every 5 seconds
-    //   const asyncintervalId = setInterval(() => {
-    //     searchNewPins();
-    //   }, 5000);
-  
-    //   // Cleanup interval when the component unmounts
-    //   return () => {
-    //     clearInterval(asyncintervalId);
-    //   };
-    // }, []);
-
-    useEffect(() => {
-    // Fetching the JSON file containing the image data
-      fetch('../assets/analysis/analysis.json')
-        .then(resp => console.log(resp))
-        // .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error loading JSON:', error));
-    }, []);
-
-
-
 
     // Set co-ords to users location
     useEffect(()=> {
@@ -90,8 +45,12 @@ export function Map({setPanorama}) {
     }, [])      
 
 
+
+
     const handlePinClick = (pin) => {
-      setPanorama(pin.img)
+      // let image = require(pin.imgRef)
+      // let image = './images/img1.jpg'
+      setPanorama(pin.imgRef)
     };
   
     
@@ -108,7 +67,7 @@ export function Map({setPanorama}) {
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution='&copy; <a href="https://carto.com/">CARTO</a>'
           />
-          {pins.map((pin) => (
+          {pins?.map((pin) => (
                   <Marker key={pin.id} position={pin.coords} icon={customIcon} eventHandlers={{
                     click: () => handlePinClick(pin),
                   }}>
