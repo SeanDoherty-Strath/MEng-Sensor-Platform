@@ -1,3 +1,17 @@
 {
-    "location": "Jamaica"
+    "location": "Glasgow",
+    "pins": [
+        {"id": 1, 
+        "coords": [55.88, -4.32], 
+        "imgRef": "./images/img1.jpg"},
+        {"id": 2, 
+        "coords": [55.89, -4.32], 
+        "imgRef": "./images/img2.jpg"},
+        {"id": 3, 
+        "coords": [55.90, -4.32], 
+        "imgRef": "./images/img3.jpg"},
+        {"id": 4, 
+        "coords": [55.91, -4.32], 
+        "imgRef": "./images/img4.jpg"}
+    ]
 }

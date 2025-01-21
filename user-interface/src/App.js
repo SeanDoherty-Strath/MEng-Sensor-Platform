@@ -5,49 +5,17 @@ import { Panorama } from './components/Panorama.js';
 
 function App() {
   
-  const [panorama, setPanorama] = useState(require('./components/images/img2.jpg'));
-  // const [panorama, setPanorama] = useState(null);
-  //   fetch("/api/route")
-  //   .then(res => res.json())
-  //   .then(data => {setAccuracy(data.accuracy)})
-  // })
-
-  // TO DO: Implelement this
-  // useEffect(() => {
-  //   // Define query parameters
-  //   const params = new URLSearchParams({
-  //     param1: 'value1',
-  //     param2: 'value2',
-  //   });
-
-  //   fetch(`/api/route?${params.toString()}`)
-  //     .then(res => res.json())
-  //     .then(data => setAccuracy(data.accuracy))
-  //     .catch(err => console.error("Error fetching data:", err));
-  // }, []);  // Add dependencies if needed
-
+  const [panorama, setPanorama] = useState();
   const [locationName, setLocationName] = useState('unnamed location')
-  // const searchNewPins = async () => {
-
-  //     try {
-
-  //       const response = await fetch('SensorPlatformAnalysis.json');
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-  //       const data = await response.json();
-  //       setLocationName(data.location_name)
-  //     } catch (err) {
-  //       console.log(err)
-  //     }
-  // }
-
-  const searchNewPins = () => {
+  const [pins, setPins] = useState([])
+  
+  const refreshData = () => {
     fetch("/getData").then(
       res => res.json()
     ).then(
       data => {
         setLocationName(data.location)
+        setPins(data.pins)
         console.log(data)
       }
     )
@@ -55,12 +23,11 @@ function App() {
 
   useEffect(()=> {
     const interval = setInterval(() => {
-      searchNewPins();
+      refreshData();
     }, 3000);
 
     // Cleanup the interval on component unmount
     return () => clearInterval(interval);
-
     }, [])
 
   return (
@@ -79,7 +46,7 @@ function App() {
       </div>
       <div className='body'>
         <div className='map-container'>
-          <Map setPanorama={setPanorama}/>
+          <Map setPanorama={setPanorama} pins={pins} setPins={setPins}/>
         </div>
 
         <div className='panoramic-container'>

@@ -42,12 +42,14 @@ export function Panorama({panorama, locationName, setLocationName}) {
         stateFunction(!state)
     }
 
+    
+
 
 
     return (
         <div className='panorama-container'>
             {panorama ? (
-                <img src={panorama} className='panorama'/>
+                <img src={panorama} alt='Dynamic' className='panorama'/>
             ) : 
             <p style={{color: 'white', margin: '10px'}}>Select a location from the map</p>
             }
