@@ -27,24 +27,41 @@ function App() {
   // }, []);  // Add dependencies if needed
 
   const [locationName, setLocationName] = useState('unnamed location')
-  const searchNewPins = async () => {
+  // const searchNewPins = async () => {
 
-      try {
+  //     try {
 
-        const response = await fetch('SensorPlatformAnalysis.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setLocationName(data.location_name)
-      } catch (err) {
-        console.log(err)
+  //       const response = await fetch('SensorPlatformAnalysis.json');
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       setLocationName(data.location_name)
+  //     } catch (err) {
+  //       console.log(err)
+  //     }
+  // }
+
+  const searchNewPins = () => {
+    fetch("/getData").then(
+      res => res.json()
+    ).then(
+      data => {
+        setLocationName(data.location)
+        console.log(data)
       }
+    )
   }
 
   useEffect(()=> {
-    searchNewPins();
-  }, [])
+    const interval = setInterval(() => {
+      searchNewPins();
+    }, 3000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(interval);
+
+    }, [])
 
   return (
   

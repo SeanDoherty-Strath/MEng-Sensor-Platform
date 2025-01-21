@@ -163,3 +163,7 @@ def getPanorama(leftImage, rightImage):
 leftImage = cv2.imread('./computer-vision/panorama/IMG_2588.JPG')
 rightImage = cv2.imread('./computer-vision/panorama/IMG_2589_Cropped.JPG')
 getPanorama(leftImage, rightImage) 
+
+
+def testBackend(n):
+    return n * 100
