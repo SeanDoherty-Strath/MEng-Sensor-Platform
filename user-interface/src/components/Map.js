@@ -25,7 +25,7 @@ const AddPinOnClick = ({pins, setPins }) => {
 
 
 
-export function Map({setPanorama, pins, setPins}) {
+export function Map({setPanorama, pins, setPins, setObjects}) {
     
     const [mapCenter, setMapCenter] = useState([55.88000, -4.31000]) // default to London
 
@@ -51,6 +51,8 @@ export function Map({setPanorama, pins, setPins}) {
       // let image = require(pin.imgRef)
       // let image = './images/img1.jpg'
       setPanorama(pin.imgRef)
+      setObjects(pin.objects)
+      console.log(pin.objects)
     };
   
     

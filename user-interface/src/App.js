@@ -8,6 +8,7 @@ function App() {
   const [panorama, setPanorama] = useState();
   const [locationName, setLocationName] = useState('unnamed location')
   const [pins, setPins] = useState([])
+  const [objects, setObjects] = useState([])
   
   const refreshData = () => {
     fetch("/getData").then(
@@ -45,11 +46,11 @@ function App() {
       </div>
       <div className='body'>
         <div className='map-container'>
-          <Map setPanorama={setPanorama} pins={pins} setPins={setPins}/>
+          <Map setPanorama={setPanorama} pins={pins} setPins={setPins} setObjects={setObjects}/>
         </div>
 
         <div className='panoramic-container'>
-          <Panorama panorama={panorama} locationName={locationName} setLocationName={setLocationName}/>
+          <Panorama panorama={panorama} locationName={locationName} setLocationName={setLocationName} objects={objects}/>
         </div>
 
       </div>

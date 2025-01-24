@@ -9,13 +9,21 @@
             "imgRef": "./images/img1.jpg",
             "objects": [
                 {
-                    "pixel_coords": [
-                        0,
-                        0,
-                        100
-                    ],
-                    "RGB_classification": "car",
-                    "HS_classification": "metal",
+                    "top": "300",
+                    "left": "150px",
+                    "width": "200px",
+                    "height": "200px",
+                    "RGB_classification": "Building",
+                    "HS_classification": "Stone",
+                    "distance": 300
+                },
+                {
+                    "top": "350px",
+                    "left": "500px",
+                    "width": "500px",
+                    "height": "150px",
+                    "RGB_classification": "Bridge",
+                    "HS_classification": "Metal",
                     "distance": 2
                 }
             ]
@@ -28,14 +36,13 @@
             "imgRef": "./images/img2.jpg",
             "objects": [
                 {
-                    "pixel_coords": [
-                        0,
-                        0,
-                        200
-                    ],
-                    "RGB_classification": "car",
-                    "HS_classification": "metal",
-                    "distance": 2
+                    "top": "100px",
+                    "left": "350px",
+                    "width": "800px",
+                    "height": "300px",
+                    "RGB_classification": "City",
+                    "HS_classification": "Metal",
+                    "distance": 100
                 }
             ]
         },
