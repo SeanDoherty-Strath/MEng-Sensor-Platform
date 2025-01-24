@@ -27,7 +27,7 @@ const AddPinOnClick = ({pins, setPins }) => {
 
 export function Map({setPanorama, pins, setPins}) {
     
-    const [mapCenter, setMapCenter] = useState([51.505, -0.09]) // default to London
+    const [mapCenter, setMapCenter] = useState([55.88000, -4.31000]) // default to London
 
     // Set co-ords to users location
     useEffect(()=> {
@@ -59,7 +59,7 @@ export function Map({setPanorama, pins, setPins}) {
       <MapContainer
           className='map'
           center={mapCenter} // Latitude and Longitude (e.g., London)
-          zoom={15} // Zoom level
+          zoom={14} // Zoom level
           >
           
 
@@ -77,7 +77,7 @@ export function Map({setPanorama, pins, setPins}) {
                   </Popup>
                   </Marker>
               ))}
-          <UpdateMapCenter newCenter={mapCenter} />
+          {/* <UpdateMapCenter newCenter={mapCenter} /> */}
           <AddPinOnClick pins={pins} setPins={setPins} />
       </MapContainer>
 

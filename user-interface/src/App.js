@@ -16,7 +16,6 @@ function App() {
       data => {
         setLocationName(data.location)
         setPins(data.pins)
-        console.log(data)
       }
     )
   }
@@ -24,7 +23,7 @@ function App() {
   useEffect(()=> {
     const interval = setInterval(() => {
       refreshData();
-    }, 3000);
+    }, 500);
 
     // Cleanup the interval on component unmount
     return () => clearInterval(interval);
@@ -41,7 +40,7 @@ function App() {
           <input placeholder='Search...'/> 
           <button>{'↵'}</button>
         </div>
-        <h1>Hyperbot</h1>
+        <h1>HYPERBOT</h1>
         
       </div>
       <div className='body'>
