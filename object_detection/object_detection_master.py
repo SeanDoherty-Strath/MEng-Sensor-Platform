@@ -1,13 +1,20 @@
 from ultralytics import YOLO
 
-# from picamera2 import Picamera2
-# from libcamera import controls
+import RPi.GPIO as GPIO
+from picamera2 import Picamera2
+from libcamera import controls
 import cv2
 from time import time
 import multiprocessing
 import json
 import math
 
+def setup_GPIO():
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(TRIGGER_PIN, GPIO.OUT)
+
+def trigger():
+    GPIO.output(TRIGGER_PIN,GPIO.HIGH)
 
 def setup_cameras():
     """Setup and start both cameras"""
@@ -58,10 +65,20 @@ def to_json(result):
     pass
 
 
+TRIGGER_PIN=26
+
 if __name__ == "__main__":
     # Setup cameras and capture images
-    # cams = setup_cameras()
-    # capture(cams, "./captures/")
+    cams = setup_cameras()
+
+    setup_GPIO()
+
+    # Trigger
+    trigger()
+
+    capture(cams, "./captures/")
+
+    exit()
 
     # Setup object detection model
     model = YOLO("yolo_models/yolo11n.pt")
