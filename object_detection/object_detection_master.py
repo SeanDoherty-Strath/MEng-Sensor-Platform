@@ -1,20 +1,21 @@
 from ultralytics import YOLO
 
-import RPi.GPIO as GPIO
+import gpiod
 from picamera2 import Picamera2
 from libcamera import controls
 import cv2
 from time import time
 import multiprocessing
-import json
-import math
+import json 
+import math                                                                      
 
 def setup_GPIO():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(TRIGGER_PIN, GPIO.OUT)
+    chip = gpiod.Chip('gpiochip4')
+    trigger_line = chip.get_line(TRIGGER_PIN)
+    trigger_line.request(consumer="Trigger", type=gpiod.LINE_REQ_DIR_OUT)
 
-def trigger():
-    GPIO.output(TRIGGER_PIN,GPIO.HIGH)
+    return trigger_line
+
 
 def setup_cameras():
     """Setup and start both cameras"""
@@ -22,11 +23,11 @@ def setup_cameras():
     camB = Picamera2(1)
 
     # Set image size
-    # config = camA.create_still_configuration({"size":()})
-    # camA.align_configuration(config)
-    # camB.align_configuration(config)
-    # camA.configure(config)
-    # camB.configure(config)
+    config = camA.create_still_configuration({"size":(4608,2592),"format":"RGB888"})
+    camA.align_configuration(config)
+    camB.align_configuration(config)
+    camA.configure(config)
+    camB.configure(config)
 
     # Setup focus
     camA.set_controls({"AfMode": controls.AfModeEnum.Continuous})
@@ -45,10 +46,9 @@ def capture(cams, save_dir=None):
     frames = []
 
     for i in range(len(cams)):
+        frames.append(cams[i].capture_array("main"))
         if save_dir != None:
-            cams[i].capture_file(save_dir + "/" + int(time()) + i)
-        else:
-            frames[i] = cams[i].capture_array("main")
+            cv2.imwrite(save_dir + "/" + str(int(time()))+"_" + str(i)+".jpg",frames[i])
 
     return frames
 
@@ -71,13 +71,14 @@ if __name__ == "__main__":
     # Setup cameras and capture images
     cams = setup_cameras()
 
-    setup_GPIO()
+    line = setup_GPIO()
 
     # Trigger
-    trigger()
+    line.set_value(1)
 
     capture(cams, "./captures/")
 
+    line.set_value(0)
     exit()
 
     # Setup object detection model

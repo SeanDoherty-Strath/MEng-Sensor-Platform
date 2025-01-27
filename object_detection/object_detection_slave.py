@@ -1,7 +1,6 @@
 from ultralytics import YOLO
 
-import RPi.GPIO as GPIO
-
+import gpiod
 from picamera2 import Picamera2
 from libcamera import controls
 import cv2
@@ -11,10 +10,11 @@ import json
 import math
 
 def setup_GPIO():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(TRIGGER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.add_event_detect(TRIGGER_PIN, GPIO.RISING, callback=capture)
+    chip = gpiod.Chip('gpiochip4')
+    trigger_line = chip.get_line(TRIGGER_PIN)
+    trigger_line.request(consumer="Trigger", type=gpiod.LINE_REQ_DIR_IN)
 
+    return trigger_line
 
 def setup_cameras():
     """Setup and start both cameras"""
@@ -22,11 +22,11 @@ def setup_cameras():
     camB = Picamera2(1)
 
     # Set image size
-    # config = camA.create_still_configuration({"size":()})
-    # camA.align_configuration(config)
-    # camB.align_configuration(config)
-    # camA.configure(config)
-    # camB.configure(config)
+    config = camA.create_still_configuration({"size":(4608,2592),"format":"RGB888"})
+    camA.align_configuration(config)
+    camB.align_configuration(config)
+    camA.configure(config)
+    camB.configure(config)
 
     # Setup focus
     camA.set_controls({"AfMode": controls.AfModeEnum.Continuous})
@@ -40,6 +40,7 @@ def setup_cameras():
 
 
 def capture(cams, save_dir=None):
+    print("CAPTURE")
     """Triggers capture on the cameras {cams}. If {save_dir} specified, the images will be saved to {save_dir} as (timestamp)_#.jpg, otherwise the frames will be returned as a tuple."""
     # TODO: Take multiple image captures and choose best to ensure non-blurry images used
     frames = []
@@ -47,10 +48,9 @@ def capture(cams, save_dir=None):
     save_dir="./captures/"
 
     for i in range(len(cams)):
+        frames.append(cams[i].capture_array("main"))
         if save_dir != None:
-            cams[i].capture_file(save_dir + "/" + int(time()) + i)
-        else:
-            frames[i] = cams[i].capture_array("main")
+            cv2.imwrite(save_dir + "/" + str(int(time())) + "_"+str(i)+".jpg",frames[i])
 
     return frames
 
@@ -67,14 +67,19 @@ def to_json(result):
     pass
 
 TRIGGER_PIN=26
-
+last = 0
 if __name__ == "__main__":
     # Setup cameras and capture images
     cams = setup_cameras()
-    setup_GPIO()
+    line = setup_GPIO()
     # capture(cams, "./captures/")
     while True:
-        pass
+        val = line.get_value()
+        if val == 1 and last == 0:
+            capture(cams, "./captures/")
+            last=1
+        if val == 0:
+            last = 0
 
     exit()
 
