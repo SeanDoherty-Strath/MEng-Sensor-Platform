@@ -1,0 +1,98 @@
+[
+    {
+        "coords": [
+            1131,
+            626,
+            258,
+            279
+        ],
+        "RGB Classification": [
+            "person",
+            0.55
+        ]
+    },
+    {
+        "coords": [
+            646,
+            561,
+            110,
+            116
+        ],
+        "RGB Classification": [
+            "clock",
+            0.49
+        ]
+    },
+    {
+        "coords": [
+            977,
+            866,
+            1880,
+            394
+        ],
+        "RGB Classification": [
+            "dining table",
+            0.48
+        ]
+    },
+    {
+        "coords": [
+            1191,
+            974,
+            289,
+            172
+        ],
+        "RGB Classification": [
+            "knife",
+            0.4
+        ]
+    },
+    {
+        "coords": [
+            638,
+            559,
+            142,
+            147
+        ],
+        "RGB Classification": [
+            "clock",
+            0.31
+        ]
+    },
+    {
+        "coords": [
+            1458,
+            622,
+            103,
+            134
+        ],
+        "RGB Classification": [
+            "chair",
+            0.3
+        ]
+    },
+    {
+        "coords": [
+            1117,
+            673,
+            147,
+            142
+        ],
+        "RGB Classification": [
+            "chair",
+            0.29
+        ]
+    },
+    {
+        "coords": [
+            242,
+            844,
+            484,
+            318
+        ],
+        "RGB Classification": [
+            "chair",
+            0.28
+        ]
+    }
+]
