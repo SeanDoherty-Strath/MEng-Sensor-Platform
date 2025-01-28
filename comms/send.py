@@ -13,7 +13,7 @@ def list_images(folder_path, client_socket):
             return
 
         print(len(images))
-        client_socket.sendall(f"{len(images)}")
+        client_socket.sendall(f"{len(images)}".encode())
 
         for image in images:
             filesize = os.path.getsize(image)
@@ -56,7 +56,7 @@ def send_images(path, ip, port):
 if __name__ == "__main__":
     ip = "10.12.23.188"
     test_ip = "10.12.71.113"
-    port = 5001
+    port = 5002
     path = ""
 
     send_images(path, ip, port)
