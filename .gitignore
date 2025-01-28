@@ -24,3 +24,6 @@ venv.bak/
 
 #Node 
 node_modules/
+
+#Received Images
+received_images/
