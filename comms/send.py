@@ -25,11 +25,12 @@ def list_images(folder_path, client_socket):
             client_socket.sendall(f"{filename}|{filesize}".encode())
 
             # Wait for acknowledgment
+            print("Waiting for acknowledgement...")
             ack = client_socket.recv(1024).decode()
             if ack != "READY":
                 print("Server is not ready to receive the file.")
                 return
-    
+            print("Acknowledgement received.")
             # Send the image file
             with open(image_path, "rb") as file:
                 while (chunk := file.read(1024)):
@@ -61,4 +62,4 @@ if __name__ == "__main__":
     port = 5002
     path = ""
 
-    send_images(path, ip, port)
+    send_images(path, test_ip, port)
