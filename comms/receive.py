@@ -20,13 +20,14 @@ def receive_image(save_location, host, port):
         print(f"Expecting {num_images} images.")
 
         for i in range(num_images):
-                    # Receive image metadata
+            # Receive image metadata
             metadata = conn.recv(1024).decode()
             filename, file_size = metadata.split("|")
             file_size = int(file_size)
 
             # Prepare to receive the file
             save_path = os.path.join(save_location, filename)
+            print(save_path)
             with open(save_path, "wb") as file:
                 received_size = 0
                 while received_size < file_size:
@@ -45,8 +46,8 @@ def receive_image(save_location, host, port):
         server_socket.close()
 
 if __name__ == "__main__":
-    port = 5001
+    port = 5002
     host = "0.0.0.0" # i.e. listening
-    save_location = ""
+    save_location = "received_images"
 
     receive_image(save_location, host, port)
