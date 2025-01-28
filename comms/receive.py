@@ -5,6 +5,8 @@ import os
 
 def receive_image(save_location, host, port):
     try:
+        os.makedirs(save_dir, exist_ok=True)
+        
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.bind((host,port))
         server_socket.listen(1)
@@ -48,6 +50,6 @@ def receive_image(save_location, host, port):
 if __name__ == "__main__":
     port = 5002
     host = "0.0.0.0" # i.e. listening
-    save_location = "received_images"
+    save_location = "./received_images"
 
     receive_image(save_location, host, port)
