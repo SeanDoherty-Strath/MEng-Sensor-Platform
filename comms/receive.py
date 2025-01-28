@@ -24,7 +24,9 @@ def receive_image(save_location, host, port):
         for i in range(num_images):
             # Receive image metadata
             metadata = conn.recv(1024).decode()
+            print(metadata)
             filename, file_size = metadata.split("|")
+            print(f"{file_size}\n {filename}")
             file_size = int(file_size)
 
             # Prepare to receive the file

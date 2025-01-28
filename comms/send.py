@@ -16,6 +16,8 @@ def list_images(folder_path, client_socket):
         client_socket.sendall(f"{len(images)}".encode())
 
         for image in images:
+            image_path = os.path.join(folder_path, image)
+            print(f"Getting ready to send {image}...")
             filesize = os.path.getsize(image)
             
             filename = os.path.basename(image)
@@ -29,7 +31,7 @@ def list_images(folder_path, client_socket):
                 return
     
             # Send the image file
-            with open(folder_path, "rb") as file:
+            with open(image_path, "rb") as file:
                 while (chunk := file.read(1024)):
                     client_socket.sendall(chunk)
             
@@ -59,4 +61,4 @@ if __name__ == "__main__":
     port = 5002
     path = ""
 
-    send_images(path, ip, port)
+    send_images(path, test_ip, port)
