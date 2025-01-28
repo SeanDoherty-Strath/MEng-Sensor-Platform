@@ -61,4 +61,4 @@ if __name__ == "__main__":
     port = 5002
     path = ""
 
-    send_images(path, test_ip, port)
+    send_images(path, ip, port)
