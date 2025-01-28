@@ -19,14 +19,14 @@ def receive_image(save_location, host, port):
         # Send acknowledgment
         num_images = int(conn.recv(1024).decode())
         conn.sendall(b"READY")
+        print("READY")
         print(f"Expecting {num_images} images.")
 
         for i in range(num_images):
+            print(i)
             # Receive image metadata
             metadata = conn.recv(1024).decode()
-            print(metadata)
             filename, file_size = metadata.split("|")
-            print(f"{file_size}\n {filename}")
             file_size = int(file_size)
 
             # Prepare to receive the file
@@ -34,20 +34,23 @@ def receive_image(save_location, host, port):
             print(save_path)
             with open(save_path, "wb") as file:
                 received_size = 0
+                print("00000")
                 while received_size < file_size:
                     chunk = conn.recv(1024)
                     if not chunk:
                         break
                     file.write(chunk)
                     received_size += len(chunk)
-            
             print(f"Image received and saved at {save_path}")
+            conn.sendall(b"READY")
+
 
     except Exception as e:
         print(f"Error: {e}")
 
     finally:
         server_socket.close()
+        print("Connection ended.")
 
 if __name__ == "__main__":
     port = 5002
