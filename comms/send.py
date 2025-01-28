@@ -54,9 +54,9 @@ def send_images(path, ip, port):
         client_socket.close()
 
 if __name__ == "__main__":
-    ip = "192.168.1.144"
+    ip = "10.12.23.188"
     test_ip = "10.12.71.113"
     port = 5001
     path = ""
 
-    send_images(path, test_ip, port)
+    send_images(path, ip, port)
