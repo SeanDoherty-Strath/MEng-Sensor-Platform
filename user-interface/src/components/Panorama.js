@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 // import {CubeOutline, LayersOutline, PinOutline, ThermometerOutline, BrushOutline, ArrowDownCircleOutline, RadioOutline } from 'react-ionicons'
 
 
-export function Panorama({panorama, locationName, setLocationName}) {
+export function Panorama({panorama, objects, locationName, setLocationName}) {
 
     // useEffect(() => {
     //     // Fetch the photo URL from the backend
@@ -50,16 +50,35 @@ export function Panorama({panorama, locationName, setLocationName}) {
         <div className='panorama-container'>
             {panorama ? (
                 <img src={panorama} alt='Dynamic' className='panorama'/>
+                
             ) : 
-            <p style={{color: 'white', margin: '10px'}}>Select a location from the map</p>
+            <p style={{color: 'white', margin: '10px', alignSelf:'center', justifySelf: 'center'}}>Select a location from the map</p>
             }
+
+            {objects?.map((item, index) => (
+                <div  onClick={()=>alert('Clicked')} className="overlay-square" style={{left: item.left, top: item.top, width: item.width, height: item.height, display: showMaterials || showObjects?'block':'none'}}>
+                    <p>{showObjects ? item.RGB_classification : ''}</p>
+                    <p>{showMaterials ? item.HS_classification : ''}</p>
+                    <p>{showDistances ? item.distance + ' m': ''}</p>
+                </div>
+            ))}
+            
             <div className='bottomBar'>
                 <h1>  {locationName}</h1>
                 {/* https://react-ionicons.netlify.app/ */}
+                <button style={{color: showObjects?'white':'grey', fontSize: "18px"}} height="30px" width="30px" onClick={() => toggleButton(showObjects, setShowObjects)}>
+                    Show Objects
+                </button>
+                <button style={{color: showMaterials?'white':'grey', fontSize: "18px"}} height="30px" width="30px" onClick={() => toggleButton(showMaterials, setShowMaterials)}>
+                    Show Materials
+                </button>
+                <button style={{color: showDistances?'white':'grey', fontSize: "18px"}} height="30px" width="30px" onClick={() => toggleButton(showDistances, setShowDistances)}>
+                    Show Distances
+                </button>
                 {/* <button>
                     <CubeOutline color={showObjects ? 'white' : '#00000'} height="30px" width="30px" onClick={() => toggleButton(showObjects, setShowObjects)}/>
-                </button>
-                <button>
+                </button> */}
+                {/* <button>
                     <LayersOutline color={showMaterials ? 'white' : '#00000'} height="30px" width="30px" onClick={() => toggleButton(showMaterials, setShowMaterials)}/>
                 </button>
                 <button>
