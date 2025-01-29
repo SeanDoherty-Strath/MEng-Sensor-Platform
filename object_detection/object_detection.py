@@ -4,6 +4,7 @@ from picamera2 import Picamera2
 from libcamera import controls
 import cv2
 from time import time
+import os
                                                         
 
 def setup_GPIO():
@@ -37,7 +38,7 @@ def setup_cameras():
     return (camA, camB)
 
 
-def capture(cams, save_dir=None):
+def capture(cams, pi_type, save_dir=None):
     """Triggers capture on the cameras {cams}. If {save_dir} specified, the images will be saved to {save_dir} as (timestamp)_#.jpg, otherwise the frames will be returned as a tuple."""
     # TODO: Take multiple image captures and choose best to ensure non-blurry images used
     frames = []
@@ -45,7 +46,9 @@ def capture(cams, save_dir=None):
     for i in range(len(cams)):
         frames.append(cams[i].capture_array("main"))
         if save_dir != None:
-            cv2.imwrite(save_dir + "/" + str(int(time()))+"_" + str(i)+".jpg",frames[i])
+            os.makedirs(f"./{save_dir}", exist_ok=True)
+            # cv2.imwrite(save_dir + "/" + str(int(time()))+"_" + str(i)+".jpg",frames[i])
+            cv2.imwrite(f"{save_dir}/{pi_type}_{i}.jpg", frames[i])
 
     return frames
 
