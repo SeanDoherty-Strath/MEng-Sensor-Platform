@@ -14,12 +14,13 @@ if __name__ == "__main__":
     port = 5002
     path = "./captures/"
   
-    client_socket = make_client_connection(test_ip, port)
+    client_socket = make_client_connection(ip, port)
 
     # Poll for trigger capture signal
     while True:
         val = line.get_value()
         if val == 1 and last == 0:
+            print("Triggered Capture")
             capture(cams, "PiB", path)
             # Process captures
             # Send captures to PiA
