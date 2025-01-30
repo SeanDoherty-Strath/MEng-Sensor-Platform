@@ -3,10 +3,8 @@
 import socket
 import os
 
-def receive_image(save_location, host, port):
+def make_server_connection(host, port):
     try:
-        os.makedirs(save_location, exist_ok=True)
-        
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.bind((host,port))
         server_socket.listen(1)
@@ -15,6 +13,16 @@ def receive_image(save_location, host, port):
         # Accept a connection
         conn, addr = server_socket.accept()
         print(f"Connection established with {addr}")
+
+        return server_socket, conn
+    except Exception as e:
+        print(f"Error: {e}")
+    
+
+def receive_image(save_location, server_socket, conn):
+    try:
+        os.makedirs(save_location, exist_ok=True)
+        
         
         # Send acknowledgment
         num_images = int(conn.recv(1024).decode())
@@ -57,4 +65,5 @@ if __name__ == "__main__":
     host = "0.0.0.0" # i.e. listening
     save_location = "./received_images"
 
-    receive_image(save_location, host, port)
+    server_socket, conn = make_server_connection(host, port)
+    receive_image(save_location, server_socket, conn)

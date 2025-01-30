@@ -9,8 +9,6 @@ if __name__ == "__main__":
     cams = setup_cameras()
     line = setup_GPIO()
 
-
-
     capture(cams, "PiA", "./captures/")
 
     port = 5002
@@ -19,10 +17,14 @@ if __name__ == "__main__":
 
     timestamp = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
     save_location = f"./{timestamp}-capture/"
-    receive_image(save_location, host, port)
-
+    
+    server_socket, conn = make_server_connection(host, port)
+    
     # Trigger capture on PiB
     line.set_value(1)
+
+    receive_image(save_location, server_socket, conn)
+
 
     # Reset GPIO
     line.set_value(0)
