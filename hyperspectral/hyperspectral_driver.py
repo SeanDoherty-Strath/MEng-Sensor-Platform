@@ -22,7 +22,7 @@ def setup_hyperspectral():
     cam.BinningHorizontal = 2
 
     # Set exposure time and gain
-    cam.ExposureTimeAbs.Value = 16000  # (cam.ExposureTimeAbs.Max)
+    cam.ExposureTimeAbs.Value = 60000  # (cam.ExposureTimeAbs.Max)
     cam.GainRaw.SetValue(200)  # Set gain to max value
 
     return cam
@@ -67,7 +67,7 @@ def grab_hyperspectral_scene(
     # print(f"Acquired {nframes} frames in {time()-t0} seconds")
 
     # Define the directory path to save images to
-    base_dir = f"hyperspectral/images/{class_name}"
+    base_dir = f"images/{class_name}"
     os.makedirs(base_dir, exist_ok=True)
 
     # Get next available index to save files to
@@ -178,9 +178,7 @@ def get_white_image(cam):
     return white_image
 
 
-def get_dark_image(
-    cam, dark_image_path="hyperspectral/calibration/dark_image_200_16k.npy"
-):
+def get_dark_image(cam, dark_image_path="calibration/dark_image_200_35k.npy"):
     """
     Loads or captures the dark reference image.
 
