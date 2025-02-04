@@ -97,12 +97,30 @@ def send_images(folder_path, client_socket):
     finally:
         client_socket.close()
 
+def receive_capture_request(client_socket):
+    try:
+        ack = client_socket.recv(1024).decode()
+        if ack != "CAPTURE REQUEST":
+            print("No capture request made.")
+            return
+        print("Capture request received.")        
+        return 1
+        
+    except Exception as e:
+        print(f"Exception: {e}")
+    
+    finally:
+        return 0
+
+
 if __name__ == "__main__":
     ip = "10.12.23.188"
     test_ip = "10.12.71.113"
     port = 5002
-    path = "./"
+    path = "./captures/"
 
     client_socket = make_client_connection(test_ip, port)
 
-    send_images(path, client_socket)
+    while(1):
+        receive_capture_request(client_socket)
+        send_images(path, client_socket)

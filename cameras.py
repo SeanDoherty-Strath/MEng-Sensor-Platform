@@ -1,5 +1,6 @@
 from picamera2 import Picamera2
 from libcamera import controls
+import os, cv2
 
 def setup_cameras():
     """Setup and start both cameras"""

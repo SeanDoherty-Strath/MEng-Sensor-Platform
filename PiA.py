@@ -21,10 +21,6 @@ if __name__ == "__main__":
     server_socket, conn = make_server_connection(host, port)
     
     # Trigger capture on PiB
-    line.set_value(1)
-
-    receive_image(save_location, server_socket, conn)
-
-
-    # Reset GPIO
-    line.set_value(0)
+    while(1):
+        request_client_capture(server_socket, conn)
+        receive_image(save_location, server_socket, conn)
