@@ -1,6 +1,7 @@
 from object_detection.object_detection import *
 from comms.send import *
 from cameras import *
+from time import sleep
 
 TRIGGER_PIN=26
 last = 0
@@ -20,6 +21,7 @@ if __name__ == "__main__":
     # Poll for trigger capture signal
     while True:
         if receive_capture_request(client_socket) != 1:
+            sleep(1)
             continue
         else:
             print("Triggered Capture")

@@ -1,6 +1,7 @@
 from object_detection.object_detection import *
 from comms.receive import *
 from datetime import datetime
+from time import sleep
 
 TRIGGER_PIN=26
 
@@ -24,3 +25,4 @@ if __name__ == "__main__":
     while(1):
         request_client_capture(server_socket, conn)
         receive_image(save_location, server_socket, conn)
+        sleep(1)
