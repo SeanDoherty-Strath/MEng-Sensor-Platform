@@ -3,7 +3,7 @@ import pynmea2
 
 
 class Neo6M:
-    def __init__(self, port="/dev/serial0", baudrate=9600, timeout=1):
+    def __init__(self, port="/dev/ttyAMA0", baudrate=9600, timeout=1):
         self.port = port
         self.baudrate = baudrate
         self.timeout = timeout
@@ -12,18 +12,18 @@ class Neo6M:
     def read_raw_data(self):
         """Reads raw NMEA sentence from the GPS module. Returns Raw NMEA sentence as a string or None if no data is available."""
         try:
-            if self.connection.in_waiting:
-                raw_data = (
-                    self.connection.readline().decode("utf-8", errors="ignore").strip()
-                )
-                return raw_data
+            raw_data = (
+                self.connection.readline().decode("utf-8", errors="ignore").strip()
+            )
+            return raw_data
         except serial.SerialException as e:
             print(f"Serial error: {e}")
         return None
 
     def get_location(self):
         """Reads and parses the GPS location from NMEA sentences. Returns Dictionary containing latitude, longitude, altitude, and fix quality or None if no fix."""
-        # TODO include timeout incase serial error
+        # TODO include timeout incase serial error 
+        # TODO return error if no GPS fix?
         while True:
             raw_data = self.read_raw_data()
             if raw_data and raw_data.startswith("$GPGGA"):  # GGA contains location data
@@ -46,7 +46,7 @@ class Neo6M:
 
 
 if __name__ == "__main__":
-    gps = Neo6M(port="/dev/serial0")
+    gps = Neo6M(port="/dev/ttyAMA0")
 
     location = gps.get_location()
     if location:
