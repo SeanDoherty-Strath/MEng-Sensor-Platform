@@ -21,13 +21,13 @@ def make_server_connection(host, port):
 def request_client_capture(server_socket, conn):
     try:
         conn.sendall(b"CAPTURE REQUEST")
-        print("CAPTURE REQUEST")
+        print("Capture request sent")
     except Exception as e:
         print("Error: {e}")
 
     
 
-def receive_image(save_location, server_socket, conn):
+def receive_images(save_location, server_socket, conn):
     try:
         os.makedirs(save_location, exist_ok=True)
         
@@ -74,6 +74,6 @@ if __name__ == "__main__":
     save_location = "./received_images"
 
     server_socket, conn = make_server_connection(host, port)
-    while(1):
-        request_client_capture(server_socket, conn)
-        receive_image(save_location, server_socket, conn)
+    
+    request_client_capture(server_socket, conn)
+    receive_images(save_location, server_socket, conn)

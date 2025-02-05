@@ -20,14 +20,12 @@ if __name__ == "__main__":
 
     # Poll for trigger capture signal
     while True:
-        if receive_capture_request(client_socket) != 1:
-            sleep(1)
-            continue
-        else:
+        if receive_capture_request(client_socket) == 1:
             print("Triggered Capture")
             capture(cams, "PiB", path)
-            # Process captures
-            # Send captures to PiA
             send_images(path, client_socket)
-            os.rmdir(path)
+            continue
+        else:
+            continue
+
     

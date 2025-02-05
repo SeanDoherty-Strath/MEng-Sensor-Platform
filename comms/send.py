@@ -3,6 +3,7 @@
 import os
 import socket
 from os import listdir
+from time import sleep
 
 def make_client_connection(ip, port):
     try:
@@ -103,15 +104,13 @@ def receive_capture_request(client_socket):
         if ack != "CAPTURE REQUEST":
             print("No capture request made.")
             return
-        print("Capture request received.")        
+        print("Capture request received.")
+        sleep(2)    
         return 1
         
     except Exception as e:
         print(f"Exception: {e}")
-    
-    finally:
         return 0
-
 
 if __name__ == "__main__":
     ip = "10.12.23.188"
