@@ -6,20 +6,24 @@ from time import sleep
 TRIGGER_PIN=26
 
 if __name__ == "__main__":
-    # Setup cameras and GPIO
-    cams = setup_cameras()
+    try:
+        # Setup cameras and GPIO
+        cams = setup_cameras()
 
-    port = 5002
-    host = "0.0.0.0" # i.e. listening
+        port = 5002
+        host = "0.0.0.0" # i.e. listening
 
-    timestamp = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
-    save_location = f"./{timestamp}-capture/"
+        timestamp = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+        save_location = f"./{timestamp}-capture/"
+        
+        server_socket, conn = make_server_connection(host, port)
+        
+        # Trigger capture on PiB
+
+        capture(cams, "PiA", save_location)
+        request_client_capture(server_socket, conn)
+        receive_images(save_location, server_socket, conn)
+        sleep(1)
     
-    server_socket, conn = make_server_connection(host, port)
-    
-    # Trigger capture on PiB
-
-    capture(cams, "PiA", save_location)
-    request_client_capture(server_socket, conn)
-    receive_images(save_location, server_socket, conn)
-    sleep(1)
+    except Exception as e:
+        print(f"Error in PiA.py: {e}")
