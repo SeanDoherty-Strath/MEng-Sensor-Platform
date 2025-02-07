@@ -87,6 +87,7 @@ def send_images(folder_path, client_socket):
                     client_socket.sendall(chunk)
             
             print(f"Image {filename} sent successfully!")
+            sleep(1)
         
         print("All images sent!")
     
