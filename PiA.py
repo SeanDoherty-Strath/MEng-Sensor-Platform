@@ -14,7 +14,7 @@ if __name__ == "__main__":
         host = "0.0.0.0" # i.e. listening
 
         timestamp = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
-        save_location = f"./{timestamp}-capture/"
+        save_location = f"./capture/{timestamp}-capture/"
         
         server_socket, conn = make_server_connection(host, port)
         

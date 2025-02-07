@@ -72,11 +72,8 @@ def send_images(folder_path, client_socket):
             print(f"Getting ready to send {image}...")
             print(image_path)
             filesize = os.path.getsize(image_path)
-            print("1")
             filename = os.path.basename(image_path)
-            print("2")
             client_socket.sendall(f"{filename}|{filesize}".encode())
-            print("3")
             # Wait for acknowledgment
             print("Waiting for acknowledgement...")
             ack = client_socket.recv(1024).decode()
