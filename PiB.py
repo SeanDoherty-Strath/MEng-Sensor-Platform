@@ -25,6 +25,9 @@ if __name__ == "__main__":
                 capture(cams, "PiB", path)
                 sleep(4)
                 send_images(path, client_socket)
+                break
+        
+        client_socket.close()
 
     except Exception as e:
         print(f"Error in PiB.py: {e}")
