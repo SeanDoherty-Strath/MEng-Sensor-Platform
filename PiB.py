@@ -19,17 +19,20 @@ if __name__ == "__main__":
         client_socket = make_client_connection(ip, port)
 
         # Poll for trigger capture signal
-        while True:
+        capture_triggered = False
+        while not capture_triggered:
             if receive_capture_request(client_socket) == 1:
                 print("Triggered Capture")
                 capture(cams, "PiB", path)
                 sleep(4)
                 send_images(path, client_socket)
-                break
+                capture_triggered = True
         
-        client_socket.close()
 
     except Exception as e:
         print(f"Error in PiB.py: {e}")
+
+    finally:
+        client_socket.close()
     
 
