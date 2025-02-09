@@ -11,7 +11,8 @@ if __name__ == "__main__":
         # Setup cameras and capture images
         cams = setup_cameras()
     
-        ip = "10.12.23.188"
+        # ip = "10.12.23.188"
+        ip = "hsiA.local"
         port = 5002
         path = "./captures/"
   
@@ -24,9 +25,6 @@ if __name__ == "__main__":
                 capture(cams, "PiB", path)
                 sleep(4)
                 send_images(path, client_socket)
-                continue
-            else:
-                continue
 
     except Exception as e:
         print(f"Error in PiB.py: {e}")
