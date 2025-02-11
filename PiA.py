@@ -1,16 +1,29 @@
 from object_detection.object_detection import *
+from comms.receive import *
+from datetime import datetime
+from time import sleep
 
 TRIGGER_PIN=26
 
 if __name__ == "__main__":
-    # Setup cameras and GPIO
-    cams = setup_cameras()
-    line = setup_GPIO()
+    try:
+        # Setup cameras and GPIO
+        cams = setup_cameras()
 
-    # Trigger capture on PiB
-    line.set_value(1)
+        port = 5002
+        host = "0.0.0.0" # i.e. listening
 
-    capture(cams, "./captures/")
+        timestamp = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+        save_location = f"./capture/{timestamp}-capture/"
+        
+        server_socket, conn = make_server_connection(host, port)
+        
+        # Trigger capture on PiB
 
-    # Reset GPIO
-    line.set_value(0)
+        capture(cams, "PiA", save_location)
+        request_client_capture(server_socket, conn)
+        receive_images(save_location, server_socket, conn)
+        sleep(1)
+    
+    except Exception as e:
+        print(f"Error in PiA.py: {e}")
